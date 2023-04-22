@@ -1,7 +1,3 @@
-locals {
-  external_role_name = try(replace(var.iam_role_arn, "/^(.*role/)/", ""), null)
-}
-
 resource "aws_iam_instance_profile" "karpenter" {
   name = "${module.this.id}-KarpenterNodeInstanceProfile"
   role = local.create_node_role ? aws_iam_role.this[0].name : local.external_role_name
@@ -10,7 +6,7 @@ resource "aws_iam_instance_profile" "karpenter" {
 resource "helm_release" "karpenter" {
   namespace        = "karpenter"
   create_namespace = true
-  depends_on       = [module.eks]
+  depends_on       = [module.iam_assumable_role_karpenter]
 
   name       = "karpenter"
   repository = "oci://public.ecr.aws/karpenter"
@@ -51,16 +47,6 @@ resource "helm_release" "karpenter" {
     name  = "logLevel"
     value = "debug"
   }
-}
-
-data "kubectl_path_documents" "karpenter" {
-  pattern = "${path.module}/karpenter/*.yaml"
-}
-
-resource "kubectl_manifest" "karpenter" {
-  for_each   = data.kubectl_path_documents.karpenter.manifests
-  yaml_body  = each.value
-  depends_on = [helm_release.karpenter]
 }
 
 #----
