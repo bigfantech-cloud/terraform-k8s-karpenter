@@ -1,6 +1,6 @@
 resource "aws_iam_instance_profile" "karpenter" {
   name = "${module.this.id}-KarpenterNodeInstanceProfile"
-  role = local.create_node_role ? aws_iam_role.this[0].name : local.external_role_name
+  role = local.create_node_role ? aws_iam_role.this[0].name : var.custom_node_role_name
 }
 
 resource "helm_release" "karpenter" {
