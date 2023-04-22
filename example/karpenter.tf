@@ -58,7 +58,7 @@ resource "aws_launch_template" "karpenter_cpu" {
 }
 
 data "kubectl_path_documents" "karpenter" {
-  pattern = "${path.module}/karpenter/*.yaml"
+  pattern = "${path.module}/values/*.yaml"
 }
 
 resource "kubectl_manifest" "karpenter" {
