@@ -13,6 +13,14 @@ To hire, email: `bigfantech@yahoo.com`
 - Create AWS Instance profile for nodes that Karpenter provisions
 - Create AWS IAM role for nodes that Karpenter provisions
 
+## Required Providers
+
+| Name                              | Description |
+| --------------------------------- | ----------- |
+| aws (hashicorp/aws)               | >= 4.47     |
+| helm (hashicorp/helm)             | >= 2.7      |
+| kubernetes (hashicorp/kubernetes) | >= 2.10     |
+
 ## Variables
 
 ### Required Variables
