@@ -7,7 +7,7 @@ locals {
 # K8S SERVICEACCOUNT
 #--
 
-module "iam_assumable_role_karpenter" {
+module "iam_assumable_role_serviceaccount_karpenter" {
   source  = "bigfantech-cloud/iam-assumable-k8s-oidc-role-with-k8s-serviceaccount/aws"
   version = "1.0.0"
 
