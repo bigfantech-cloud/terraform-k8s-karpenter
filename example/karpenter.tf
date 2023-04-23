@@ -2,17 +2,17 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 19.13"
 
-  cluster_name  = "thecluster"
-  ....
-  ...... other attributes
-  .......
-  
+  cluster_name = "thecluster"
+  # ....
+  # ...... other attributes
+  # .......
+
 }
-  
+
 module "karpenter" {
   source  = "bigfantech-cloud/karpenter/k8s"
   version = "1.0.0"
-  
+
   cluster_name            = module.eks.cluster_name
   cluster_endpoint        = module.eks.cluster_endpoint
   enable_spot_termination = false
@@ -60,6 +60,6 @@ data "kubectl_path_documents" "karpenter" {
 }
 
 resource "kubectl_manifest" "karpenter" {
-  for_each   = data.kubectl_path_documents.karpenter.manifests
-  yaml_body  = each.value
+  for_each  = data.kubectl_path_documents.karpenter.manifests
+  yaml_body = each.value
 }
