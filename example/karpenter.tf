@@ -19,8 +19,6 @@ module "karpenter" {
   karpenter_sa_additional_iam_policies_arn_list = [
     "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   ]
-  create_node_role      = false
-  custom_node_role_name = module.eks.worker_iam_role_name
 }
 
 resource "aws_launch_template" "karpenter_cpu" {

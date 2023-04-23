@@ -15,6 +15,7 @@ module "iam_assumable_role_karpenter" {
   service_account_name    = "karpenter-controller"
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   oidc_provider_arn       = module.eks.oidc_provider_arn
+  iam_role_name           = var.karpenter_serviceaccount_iam_role_name
   policy_jsons_list       = [data.aws_iam_policy_document.karpenter_controller_policy.json]
   policy_arns_list        = var.karpenter_sa_additional_iam_policies_arn_list
 }

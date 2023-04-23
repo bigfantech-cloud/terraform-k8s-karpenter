@@ -20,6 +20,12 @@ variable "karpenter_sa_additional_iam_policies_arn_list" {
   default     = []
 }
 
+variable "karpenter_serviceaccount_iam_role_name" {
+  description = "Custom name for ServiceAccount IAM role created by this module"
+  type        = string
+  default     = null
+}
+
 variable "cluster_ip_family" {
   description = "The IP family used to assign Kubernetes pod and service addresses. Valid values are `ipv4` (default) and `ipv6`"
   type        = string
