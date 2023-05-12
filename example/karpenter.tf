@@ -1,3 +1,13 @@
+data "aws_ami" "latest_eks_bottlerocket" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["bottlerocket-aws-k8s-1.23-x86_64-*"]
+  }
+}
+  
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 19.13"
@@ -25,10 +35,9 @@ resource "aws_launch_template" "karpenter_cpu" {
   name                   = "karpenter-provisioning-node"
   description            = "EKS Karpenter provisioning node Launch-Template"
   update_default_version = true
-  key_name               = var.eks_node_keypair_name
+  key_name               = "thekeypair"
   image_id               = data.aws_ami.latest_eks_bottlerocket.image_id
   vpc_security_group_ids = [module.eks.cluster_primary_security_group_id]
-  user_data              = local.userdata_cpu
 
   iam_instance_profile {
     name = module.karpenter.karpenter_node_instance_profile_name
